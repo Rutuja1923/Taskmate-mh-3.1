@@ -1,0 +1,62 @@
+[
+    {
+        "title": "HTML Basics",
+        "description": "Read about HTML tags and create a simple webpage."
+    },
+    {
+        "title": "CSS Styling",
+        "description": "Apply basic CSS styles to a webpage, including colors and fonts."
+    },
+    {
+        "title": "Flexbox Practice",
+        "description": "Create a simple layout using CSS Flexbox."
+    },
+    {
+        "title": "JavaScript Variables",
+        "description": "Learn about let, const, and var in JavaScript."
+    },
+    {
+        "title": "DOM Manipulation",
+        "description": "Write a script to change text content of an HTML element on button click."
+    },
+    {
+        "title": "Event Listeners",
+        "description": "Attach click events to buttons and log messages to the console."
+    },
+    {
+        "title": "Array Methods",
+        "description": "Practice JavaScript array methods like map, filter, and reduce."
+    },
+    {
+        "title": "Fetch API",
+        "description": "Make a simple GET request to an API and display the response."
+    },
+    {
+        "title": "Local Storage",
+        "description": "Store and retrieve user input using localStorage."
+    },
+    {
+        "title": "CSS Grid Layout",
+        "description": "Create a 2x2 grid layout using CSS Grid."
+    },
+    {
+        "title": "Async/Await",
+        "description": "Write an async function that fetches data from an API."
+    },
+    {
+        "title": "React Component",
+        "description": "Read an article on React components and show a demo of 3 example components."
+    },
+    {
+        "title": "Node.js Server",
+        "description": "Set up a basic Express server that responds with 'Hello, World!'."
+    },
+    {
+        "title": "MongoDB Connection",
+        "description": "Connect to a MongoDB database using Mongoose."
+    },
+    {
+        "title": "Git Basics",
+        "description": "Initialize a Git repository and make your first commit."
+    }
+]
