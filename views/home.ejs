@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taskmate</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body class="dark-theme">
+    <header>
+      <div class="header-left">
+        <h1>Taskmate</h1>
+        <p>Manage your daily tasks efficiently and stay organized.</p>
+      </div>
+      <div class="header-right">
+        <% if (user) { %>
+        <p class="welcome-msg">Welcome Back, <%= user.name %></p>
+        <a href="/logout" class="auth-btn">Logout</a>
+        <% } else { %>
+        <a href="/login" class="auth-btn">Login</a>
+        <a href="/signup" class="auth-btn">Sign Up</a>
+        <% } %>
+      </div>
+    </header>
+
+    <main>
+      <button id="add-task-btn">Add Task +</button>
+
+      <div id="task-form-container" class="hidden">
+        <form class="form-container" method="POST" action="/tasks">
+          <input
+            type="text"
+            id="task-title"
+            name="title"
+            placeholder="Task Title"
+            required
+          />
+          <input
+            type="text"
+            id="task-desc"
+            name="description"
+            placeholder="Task Description"
+            required
+          />
+          <input
+            type="hidden"
+            name="userId"
+            value="<%= user ? user.id : '' %>"
+          />
+          <button type="submit" id="done-btn">
+            <i class="fas fa-check"></i> Done
+          </button>
+          <button type="button" id="close-form-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="task-table-container">
+        <% if (tasks && tasks.length > 0) { %>
+        <table>
+          <caption>
+            Your Tasks
+          </caption>
+          <thead>
+            <tr>
+              <th>Sl. No</th>
+              <th>Task Title</th>
+              <th>Task Description</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tasks.forEach((task, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= task.title %></td>
+              <td><%= task.description %></td>
+              <td><%= task.status %></td>
+              <td>
+                <% if (task.status !== 'Completed') { %>
+                <form method="POST" action="/tasks/update/<%= task.id %>">
+                  <button type="submit" class="complete-btn">
+                    Mark as Completed
+                  </button>
+                </form>
+                <% } %>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Taskmate. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
