@@ -13,7 +13,7 @@ async function checkForAuthentication(req, res, next) {
             }
         }
 
-        console.log("User in checkForAuthentication:", req.user);
+        // console.log("User in checkForAuthentication:", req.user);
 
         if (!req.user) {
             return res.status(401).json(
@@ -40,7 +40,7 @@ async function checkForAuthentication(req, res, next) {
 //restrict access based on roles
 function restrictTo(roles) {
     return function (req, res, next) {
-        console.log("User in restrictTo:", req.user);
+        // console.log("User in restrictTo:", req.user);
 
         if (!req.user) {
             return res.status(401).json(
