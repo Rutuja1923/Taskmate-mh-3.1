@@ -21,16 +21,14 @@ async function createAdmin() {
             return;
         }
 
-        //hash the admin password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(adminPassword, salt);
-
-        const newAdmin = await User.create({
+        const newAdmin = new User({
             name: "Admin",
             email: adminEmail,
-            password: hashedPassword,
+            password: adminPassword,
             role: "admin",
         });
+
+        await newAdmin.save();
 
         if (newAdmin) {
             console.log('Admin created successfully!', newAdmin);
