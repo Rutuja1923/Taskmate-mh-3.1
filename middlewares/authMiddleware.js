@@ -15,16 +15,7 @@ async function checkForAuthentication(req, res, next) {
 
         // console.log("User in checkForAuthentication:", req.user);
 
-        if (!req.user) {
-            return res.status(401).json(
-                { 
-                    status: "Error",
-                    message: "Not authorized. Please log in.", 
-                }
-            );
-        }
-
-        next();
+        return next();
     } 
     catch (error) {
         return res.status(500).json(
@@ -60,7 +51,7 @@ function restrictTo(roles) {
             );
         }
 
-        next();
+        return next();
     };
 }
 
