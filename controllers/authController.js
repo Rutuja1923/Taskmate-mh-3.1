@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const { setUser } = require("../services/auth");
 
-//POST /api/auth/signup 
+//POST user/signup 
 //Register a new user
 async function handleUserSignup (req, res) {
     try {
@@ -10,12 +10,9 @@ async function handleUserSignup (req, res) {
         let existingUser = await User.findOne( {email} );
 
         if (existingUser) {
-            return res.status(400).json(
-                {
-                    status : "Error",
-                    message : "User Already Exists",
-                }
-            );
+            return res.render("signup-failed", { 
+                message: "User Already Exists. Please use a different email to register." 
+            });
         }
 
         const user = await User.create({
@@ -24,12 +21,7 @@ async function handleUserSignup (req, res) {
             password,
         });
 
-        res.status(201).json(
-            { 
-                status : "Success",
-                message : "User Registered Successfully", 
-            }
-        );
+        res.redirect("/login");
     }
     catch (error) {
         console.log("Error in User Login. " + error);
@@ -42,7 +34,7 @@ async function handleUserSignup (req, res) {
     }
 }
 
-//POST /api/auth/login
+//POST user/login
 //Authenticate user & set JWT in cookies
 async function handleUserLogin (req, res) {
     try {
@@ -51,12 +43,9 @@ async function handleUserLogin (req, res) {
         const user = await User.findOne( {email} );
 
         if (!user || !(await user.comparePassword(password))) {
-            return res.status(400).json(
-                { 
-                    status : "Error",
-                    message : "Invalid Email or Password" ,
-                }
-            );
+            return res.render("login-failed", { 
+                message: "Oops! Invalid Email or Password. Please sign up if not registered or login with correct details."
+            });
         }
 
         const token = setUser(user);
@@ -65,14 +54,7 @@ async function handleUserLogin (req, res) {
             secure: process.env.NODE_ENV === 'production'
         });
 
-        res.status(200).json(
-            {   
-                status : "Success",
-                message: `Welcome Back ${user.name}`, 
-                userId: user._id,
-                token: token,
-            }
-        );
+        res.redirect("/");
     }
     catch (error) {
         console.log("Error in Creating New User. "+ error);
@@ -85,38 +67,4 @@ async function handleUserLogin (req, res) {
     }
 }
 
-//POST /api/auth/logout
-//logout user (clear token cookie)
-function handleUserLogout (req, res) {
-    try {
-        if (!req.cookies.token) {
-            return res.status(400).json(
-                { 
-                    status : "Error",
-                    message: "No Active Session Found", 
-                }
-            );
-        }
-        
-        //clear the cookie : token string 
-        res.clearCookie("token", { httpOnly: true});
-
-        res.status(200).json(
-            { 
-                status : "Success",
-                message : "Logged Out Successfully", 
-            }
-        );
-    } 
-    catch (error) {
-        res.status(500).json(
-            { 
-                status : "Server Error", 
-                message : error.message, 
-            }
-        );
-    }
-    
-}
-
-module.exports = {handleUserSignup , handleUserLogin, handleUserLogout}
+module.exports = {handleUserSignup , handleUserLogin}
