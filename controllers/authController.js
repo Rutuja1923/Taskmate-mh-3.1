@@ -15,22 +15,16 @@ async function handleUserSignup (req, res) {
             });
         }
 
-        const user = await User.create({
+        await User.create({
             name,
             email,
             password,
         });
 
-        res.redirect("/login");
+        return res.redirect("/login");
     }
     catch (error) {
-        console.log("Error in User Login. " + error);
-        res.status(500).json(
-            { 
-                status : "Server Error", 
-                message : error.message, 
-            }
-        );
+        console.log(`Error in User Login ${error}`);
     }
 }
 
@@ -54,16 +48,10 @@ async function handleUserLogin (req, res) {
             secure: process.env.NODE_ENV === 'production'
         });
 
-        res.redirect("/");
+        return res.redirect("/");
     }
     catch (error) {
-        console.log("Error in Creating New User. "+ error);
-        res.status(500).json(
-            { 
-                status : "Server Error", 
-                message : error.message, 
-            }
-        );
+        console.log(`Error in User Signup ${error}`);
     }
 }
 
