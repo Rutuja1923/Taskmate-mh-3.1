@@ -13,16 +13,19 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    transition: background 0.3s, color 0.3s;
 }
 
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 20px;
-    border-bottom: 2px solid #ff9800;
+    padding: 10px;
+    border-bottom: 1px solid #ff9800;
 }
 
 .header-left {
@@ -43,12 +46,16 @@ h1 {
     color: #ff9800;
 }
 
-p {
+#msg {
     font-size: 1rem;
     max-width: 500px;
-    margin: 10px 10px 10px 0px;
+    margin: 10px 10px 0px 0px;
     line-height: 1.5;
     text-align: start;
+}
+
+.welcome-msg, .no-tasks-btn {
+    font-size: 1rem;
 }
 
 .auth-btn {
@@ -57,16 +64,30 @@ p {
     padding: 10px 15px;
     text-decoration: none;
     border-radius: 5px;
-    transition: background 0.3s;
+    transition: 0.3s;
 }
 
 .auth-btn:hover {
     background: #e68900;
 }
 
-.welcome-msg {
-    font-size: 1.5rem;
-    margin-right: 10px;
+#add-task-btn {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+}
+
+#task-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
 }
 
 .form-container {
@@ -74,7 +95,7 @@ p {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 input[type="text"] {
@@ -96,16 +117,20 @@ button {
     font-size: 1rem;
     cursor: pointer;
     border-radius: 5px;
-    transition: background 0.3s;
+    transition: 0.3s;
 }
 
 button:hover {
     background: #e68900;
 }
 
+#close-form-btn {
+    align-self: flex-end;
+}
+
 .task-table-container {
     margin-top: 20px;
-    width: 80%;
+    /* width: 80%; */
     text-align: center;
 }
 
@@ -144,11 +169,44 @@ tbody tr:hover {
     background: rgba(255, 255, 255, 0.15);
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
+    border-top: 1px solid #ff9800;
+}
+
 @media (max-width: 768px) {
+    
     table {
         font-size: 0.9rem;
     }
     th, td {
         padding: 8px;
     }
+    #add-task-btn {
+        top: 130px;
+    }
 }
+
+@media (max-width: 630px){
+    #add-task-btn {
+        top: 150px;
+    }
+}
+
+@media (max-width: 500px) {
+    #add-task-btn {
+        top: 200px;
+    }
+}
+
+/* @media (max-width: 390px) {
+    #add-task-btn {
+        top: 200px;
+    }
+} */
