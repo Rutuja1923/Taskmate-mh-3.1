@@ -30,10 +30,9 @@ app.use(cookieParser());
 app.use(checkForAuthentication);
 
 //route register
-// app.use("/api/tasks", taskRoutes);
-// app.use("/api/admin", adminRoutes);
 app.use("/", homeRoutes);
 app.use("/user", authRoutes);
+app.use("/tasks", taskRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);
