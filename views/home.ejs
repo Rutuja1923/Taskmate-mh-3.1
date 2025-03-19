@@ -10,11 +10,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
   </head>
-  <body class="dark-theme">
+  <body class="dark-theme" data-user-logged-in="<%= user ? 'true' : 'false' %>">
     <header>
       <div class="header-left">
         <h1>Taskmate</h1>
-        <p>Manage your daily tasks efficiently and stay organized.</p>
+        <p id="msg">Manage your daily tasks efficiently and stay organized.</p>
       </div>
       <div class="header-right">
         <% if (user) { %>
@@ -28,9 +28,15 @@
     </header>
 
     <main>
-      <button id="add-task-btn">Add Task +</button>
+      <button id="add-task-btn">Add Task <i class="fa fa-plus"></i></button>
 
-      <div id="task-form-container" class="hidden">
+      <div id="task-form-container" style="display: none;">
+        <div class="task-title">
+          <h3>Task Details</h3>
+          <button type="button" id="close-form-btn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
         <form class="form-container" method="POST" action="/tasks">
           <input
             type="text"
@@ -54,14 +60,11 @@
           <button type="submit" id="done-btn">
             <i class="fas fa-check"></i> Done
           </button>
-          <button type="button" id="close-form-btn">
-            <i class="fas fa-times"></i>
-          </button>
         </form>
       </div>
 
       <div class="task-table-container">
-        <% if (tasks && tasks.length > 0) { %>
+        <% if (user && tasks && tasks.length > 0) { %>
         <table>
           <caption>
             Your Tasks
@@ -79,28 +82,31 @@
             <% tasks.forEach((task, index) => { %>
             <tr>
               <td><%= index + 1 %></td>
-              <td><%= task.title %></td>
+              <td><%= task.taskTitle %></td>
               <td><%= task.description %></td>
               <td><%= task.status %></td>
               <td>
-                <% if (task.status !== 'Completed') { %>
-                <form method="POST" action="/tasks/update/<%= task.id %>">
-                  <button type="submit" class="complete-btn">
-                    Mark as Completed
+                <% if (task.status !== 'completed') { %>
+                  <button class="complete-btn"  onclick="updateTaskStatus('<%= task._id %>')">
+                    <i class="fa fa-check"></i>
                   </button>
-                </form>
                 <% } %>
+                <button class="delete-btn" onclick="deleteTask('<%= task._id %>')">
+                  <i class="fa fa-trash"></i>
+                </button>
               </td>
             </tr>
             <% }); %>
           </tbody>
         </table>
+        <% } else { %>
+          <p class="no-tasks-message">No tasks available. Start by adding tasks!</p>
         <% } %>
       </div>
     </main>
-
     <footer>
       <p>&copy; 2025 Taskmate. All Rights Reserved.</p>
     </footer>
+    <script src="/js/script.js"></script>
   </body>
 </html>
