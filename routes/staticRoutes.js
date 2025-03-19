@@ -1,16 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const {checkForAuthentication} = require('../middlewares/authMiddleware');
+const { handleGetTasks } = require("../controllers/taskController");
 
-router.get("/", (req, res) => {
-    console.log(req.user);
-    res.render("home", { 
+router.get("/", async (req, res) => {
+    //console.log(req.user);
+
+    let tasks = null;
+
+    //make a request to taskRoutes to get all the tasks of the user
+    if (req.user) {
+        tasks = await handleGetTasks(req);
+    }
+
+    return res.render("home", { 
         user: req.user || null,
-        tasks: []
+        tasks: tasks,
     });
 });
-
-module.exports = router;
 
 router.get('/signup', (req,res) => {
     return res.render('signup');
@@ -25,14 +32,11 @@ router.get("/logout", checkForAuthentication, (req, res) => {
         //clear the cookie : token string 
         res.clearCookie("token", { httpOnly: true});
 
-        res.redirect("/");
+        return res.redirect("/");
     } 
     catch (error) {
-        res.status(500).json(
-            { 
-                status : "Server Error", 
-                message : error.message, 
-            }
-        );
+        console.log(`Error in logging out user : ${error}`);
     }
 });
+
+module.exports = router;
