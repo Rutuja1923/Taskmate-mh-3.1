@@ -33,6 +33,7 @@ app.use(checkForAuthentication);
 app.use("/", homeRoutes);
 app.use("/user", authRoutes);
 app.use("/tasks", taskRoutes);
+app.use("/admin", adminRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server started at port ${PORT}`);
