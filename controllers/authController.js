@@ -24,7 +24,7 @@ async function handleUserSignup (req, res) {
         return res.redirect("/login");
     }
     catch (error) {
-        console.log(`Error in User Login ${error}`);
+        console.error(`Error in User Signup ${error}`);
     }
 }
 
@@ -51,7 +51,7 @@ async function handleUserLogin (req, res) {
         return res.redirect("/");
     }
     catch (error) {
-        console.log(`Error in User Signup ${error}`);
+        console.error(`Error in User login ${error}`);
     }
 }
 
